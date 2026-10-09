@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Arduino Uno and Sensor Kit setup, exercises, videos, code, and parts list.">
+  <title>Arduino Uno and Sensor Kit</title>
+  <style>
+    :root {
+      --blue: #0051ba;
+      --dark-blue: #003459;
+      --gold: #ffc82d;
+      --ink: #172033;
+      --muted: #5d6879;
+      --surface: #ffffff;
+      --background: #f3f6fa;
+      --border: #dce3ec;
+      --shadow: 0 10px 30px rgba(0, 52, 89, 0.10);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--background);
+      line-height: 1.6;
+    }
+
+    a { color: var(--blue); }
+    a:focus-visible, .button:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .hero {
+      color: white;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 200, 45, 0.30), transparent 28%),
+        linear-gradient(135deg, var(--dark-blue), var(--blue));
+      padding: 5rem 1.25rem 4rem;
+    }
+
+    .hero-inner, main, .footer-inner {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 0.8rem;
+      padding: 0.35rem 0.75rem;
+      color: var(--dark-blue);
+      background: var(--gold);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(2.2rem, 6vw, 4.3rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 1.25rem 0 0;
+      color: rgba(255,255,255,0.88);
+      font-size: 1.1rem;
+    }
+
+    main { padding: 2rem 1.25rem 4rem; }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin: -3.1rem 0 2rem;
+      padding: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .quick-links a {
+      padding: 0.55rem 0.85rem;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 10px;
+    }
+
+    .quick-links a:hover { background: #eaf2ff; }
+
+    section { scroll-margin-top: 1rem; }
+    .section-heading { margin: 2.5rem 0 1rem; }
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.65rem, 3vw, 2.25rem);
+      color: var(--dark-blue);
+    }
+    .section-heading p { margin: 0.3rem 0 0; color: var(--muted); }
+
+    .setup-grid, .exercise-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 5px 18px rgba(0, 52, 89, 0.06);
+    }
+
+    .card-content { padding: 1.4rem; }
+    .card h3 { margin: 0 0 0.5rem; color: var(--dark-blue); font-size: 1.25rem; }
+    .card p { margin: 0 0 1rem; color: var(--muted); }
+
+    .parts-list {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+    .parts-list li + li { margin-top: 0.55rem; }
+    .parts-list a { font-weight: 700; }
+
+    .exercise-number {
+      display: inline-grid;
+      place-items: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      margin-bottom: 0.75rem;
+      background: var(--gold);
+      color: var(--dark-blue);
+      border-radius: 50%;
+      font-weight: 900;
+    }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.72rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 800;
+      border: 2px solid var(--blue);
+    }
+    .button.primary { background: var(--blue); color: white; }
+    .button.secondary { background: white; color: var(--blue); }
+    .button:hover { transform: translateY(-1px); box-shadow: 0 5px 12px rgba(0,81,186,0.15); }
+
+    .optional {
+      margin-top: 1rem;
+      border-left: 6px solid var(--gold);
+    }
+    .optional-links {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .optional-links a {
+      padding: 0.85rem;
+      background: #f6f9fd;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 750;
+    }
+    .optional-links a:hover { background: #eaf2ff; }
+
+    footer {
+      color: rgba(255,255,255,0.85);
+      background: var(--dark-blue);
+      padding: 1.5rem 1.25rem;
+    }
+    footer p { margin: 0; }
+
+    @media (max-width: 760px) {
+      .hero { padding-top: 4rem; }
+      .setup-grid, .exercise-grid, .optional-links { grid-template-columns: 1fr; }
+      .quick-links { margin-top: -2.2rem; }
+      .button { width: 100%; justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .button:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Hands-on Arduino Learning</p>
+      <h1>Arduino Uno and Sensor Kit</h1>
+      <p>Set up the hardware, work through four guided sensor exercises, and extend the project with optional activities.</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="quick-links" aria-label="Page sections">
+      <a href="#setup">Setup &amp; Parts</a>
+      <a href="#exercise-1">OLED Screen</a>
+      <a href="#exercise-2">Pressure</a>
+      <a href="#exercise-3">Humidity</a>
+      <a href="#exercise-4">Soil Moisture</a>
+      <a href="#optional">Optional Exercises</a>
+    </nav>
+
+    <section id="setup">
+      <div class="section-heading">
+        <h2>Setting Up the Arduino Uno and Sensor Kit</h2>
+        <p>Start with the setup video, then gather the listed components.</p>
+      </div>
+      <div class="setup-grid">
+        <article class="card">
+          <div class="card-content">
+            <h3>Setup Video</h3>
+            <p>Follow the introductory walkthrough before beginning the exercises.</p>
+            <div class="actions">
+              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_8o6gl9po" target="_blank" rel="noopener noreferrer">Watch setup video ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-content">
+            <h3>Parts</h3>
+            <p>These components are available from several vendors.</p>
+            <ul class="parts-list">
+              <li><a href="https://store-usa.arduino.cc/products/arduino-uno-rev3" target="_blank" rel="noopener noreferrer">Arduino Uno</a> <span>(other UNO-style boards may also be used)</span></li>
+              <li><a href="https://store-usa.arduino.cc/products/usb-2-0-cable-type-a-b" target="_blank" rel="noopener noreferrer">USB Cord Type A/B</a></li>
+              <li><a href="https://store-usa.arduino.cc/products/sensor-kit-base" target="_blank" rel="noopener noreferrer">Arduino Sensor Kit</a></li>
+              <li><a href="https://www.seeedstudio.com/Grove-Capacitive-Moisture-Sensor-Corrosion-Resistant-p-2580.html" target="_blank" rel="noopener noreferrer">Grove Capacitive Soil Moisture Sensor</a></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="guided-exercises">
+      <div class="section-heading">
+        <h2 id="guided-exercises">Guided Exercises</h2>
+        <p>Each exercise includes a demonstration video and an Arduino code example.</p>
+      </div>
+      <div class="exercise-grid">
+        <article class="card" id="exercise-1">
+          <div class="card-content">
+            <span class="exercise-number" aria-hidden="true">1</span>
+            <h3>Writing to the OLED Screen</h3>
+            <p>Begin by displaying information on the Sensor Kit's OLED screen.</p>
+            <div class="actions">
+              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_754qtpfv" target="_blank" rel="noopener noreferrer">Watch video ↗</a>
+              <a class="button secondary" href="https://app.arduino.cc/sketches/b22dc400-028f-4caf-9e6a-1dc507a0e063?view-mode=preview" target="_blank" rel="noopener noreferrer">View code ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" id="exercise-2">
+          <div class="card-content">
+            <span class="exercise-number" aria-hidden="true">2</span>
+            <h3>Reading the Barometric Pressure Sensor</h3>
+            <p>Use the Sensor Kit to read barometric pressure.</p>
+            <div class="actions">
+              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_va7doj5f" target="_blank" rel="noopener noreferrer">Watch video ↗</a>
+              <a class="button secondary" href="https://app.arduino.cc/sketches/4eb62a46-488c-4d87-a20f-ed4bd04d124d?view-mode=preview" target="_blank" rel="noopener noreferrer">View code ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" id="exercise-3">
+          <div class="card-content">
+            <span class="exercise-number" aria-hidden="true">3</span>
+            <h3>Reading the Humidity Sensor</h3>
+            <p>Collect humidity measurements with the Sensor Kit.</p>
+            <div class="actions">
+              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_f60ahee9" target="_blank" rel="noopener noreferrer">Watch video ↗</a>
+              <a class="button secondary" href="https://app.arduino.cc/sketches/c9a13b0b-5aa5-45ec-8cf8-0ce970398c42?view-mode=preview" target="_blank" rel="noopener noreferrer">View code ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" id="exercise-4">
+          <div class="card-content">
+            <span class="exercise-number" aria-hidden="true">4</span>
+            <h3>Reading and Calibrating the Soil Moisture Sensor</h3>
+            <p>Read the sensor, then adjust its output using calibration values.</p>
+            <div class="actions">
+              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_81arxq8j" target="_blank" rel="noopener noreferrer">Watch video ↗</a>
+              <a class="button secondary" href="https://app.arduino.cc/sketches/10fa6937-dd75-4422-a21e-bdd9fcbefa9e?view-mode=preview" target="_blank" rel="noopener noreferrer">Reading code ↗</a>
+              <a class="button secondary" href="https://app.arduino.cc/sketches/7a5293f7-a163-4039-85c8-77ed87276c5f?view-mode=preview" target="_blank" rel="noopener noreferrer">Calibration code ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="optional">
+      <div class="section-heading">
+        <h2>Optional Exercises</h2>
+        <p>Continue exploring with light, motion, and water-pump activities.</p>
+      </div>
+      <article class="card optional">
+        <div class="card-content">
+          <div class="actions" style="margin-bottom: 1rem;">
+            <a class="button primary" href="https://mediahub.ku.edu/media/t/1_x2z7957x" target="_blank" rel="noopener noreferrer">Watch optional-exercises video ↗</a>
+          </div>
+          <div class="optional-links">
+            <a href="https://app.arduino.cc/sketches/7087df22-ae4c-4134-9cbb-9320348efe50?view-mode=preview" target="_blank" rel="noopener noreferrer">Light sensor code ↗</a>
+            <a href="https://app.arduino.cc/sketches/2e43ef13-4847-4481-a2ee-2bb6536f489d?view-mode=preview" target="_blank" rel="noopener noreferrer">Accelerometer code ↗</a>
+            <a href="https://app.arduino.cc/sketches/1099a21e-4796-4ce0-abe8-bf946ffaef13?view-mode=preview" target="_blank" rel="noopener noreferrer">Water pump code ↗</a>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Arduino Uno and Sensor Kit learning resources</p>
+    </div>
+  </footer>
+</body>
+</html>
