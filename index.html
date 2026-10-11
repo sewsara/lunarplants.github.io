@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Arduino Uno and Sensor Kit setup, exercises, videos, code, and parts list.">
-  <title>Arduino Uno and Sensor Kit</title>
+  <meta name="description" content="Teacher resources combining biology and engineering for Plant the Moon activities and competitions.">
+  <title>Growing Plants on the Moon | Biology and Engineering Resources</title>
   <style>
     :root {
-      --blue: #0051ba;
-      --dark-blue: #003459;
-      --gold: #ffc82d;
-      --ink: #172033;
-      --muted: #5d6879;
-      --surface: #ffffff;
-      --background: #f3f6fa;
-      --border: #dce3ec;
-      --shadow: 0 10px 30px rgba(0, 52, 89, 0.10);
-      --radius: 16px;
+      --ku-blue: #0051ba;
+      --ku-dark-blue: #003459;
+      --ku-red: #e8000d;
+      --moon: #eef2f5;
+      --ink: #17212b;
+      --muted: #536170;
+      --card: #ffffff;
+      --line: #d9e1e8;
+      --accent: #f3b61f;
+      --shadow: 0 12px 30px rgba(0, 52, 89, 0.10);
     }
 
     * { box-sizing: border-box; }
@@ -25,309 +25,219 @@
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
-      background: var(--background);
-      line-height: 1.6;
+      background: #f7f9fb;
+      line-height: 1.65;
     }
-
-    a { color: var(--blue); }
-    a:focus-visible, .button:focus-visible {
-      outline: 3px solid var(--gold);
+    a { color: var(--ku-blue); }
+    a:hover { color: var(--ku-red); }
+    a:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--accent);
       outline-offset: 3px;
     }
 
-    .hero {
+    .site-header {
       color: white;
       background:
-        radial-gradient(circle at 85% 20%, rgba(255, 200, 45, 0.30), transparent 28%),
-        linear-gradient(135deg, var(--dark-blue), var(--blue));
-      padding: 5rem 1.25rem 4rem;
+        radial-gradient(circle at 82% 24%, rgba(255,255,255,.19) 0 3px, transparent 4px),
+        radial-gradient(circle at 74% 60%, rgba(255,255,255,.13) 0 2px, transparent 3px),
+        radial-gradient(circle at 91% 72%, rgba(255,255,255,.18) 0 2px, transparent 3px),
+        linear-gradient(135deg, #003459 0%, #0051ba 60%, #182848 100%);
+      padding: 1rem 1.25rem 4.5rem;
+    }
+    .topbar, .hero, main, footer { max-width: 1120px; margin-inline: auto; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { font-size: .85rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .topbar nav { display: flex; flex-wrap: wrap; gap: .34rem 1rem; }
+    .topbar nav a { color: #fff; text-decoration: none; font-size: .92rem; }
+    .hero { padding-top: 4.4rem; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; align-items: center; }
+    .eyebrow { color: #d8e9ff; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .84rem; }
+    h1 { margin: .35rem 0 1rem; max-width: 830px; font-size: clamp(2.25rem, 6vw, 4.8rem); line-height: 1.04; }
+    .hero p { max-width: 760px; font-size: 1.13rem; color: #eef6ff; }
+    .moon-icon {
+      width: 160px; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle at 33% 28%, #fff 0 5%, transparent 6%),
+                  radial-gradient(circle at 65% 68%, #c8d0d8 0 9%, transparent 10%),
+                  radial-gradient(circle at 70% 28%, #d1d7dc 0 6%, transparent 7%),
+                  linear-gradient(145deg, #fafafa, #aeb9c2);
+      box-shadow: -18px 22px 45px rgba(0,0,0,.28);
+      flex: none;
     }
 
-    .hero-inner, main, .footer-inner {
-      width: min(1100px, 100%);
-      margin: 0 auto;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      margin: 0 0 0.8rem;
-      padding: 0.35rem 0.75rem;
-      color: var(--dark-blue);
-      background: var(--gold);
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-      max-width: 780px;
-      font-size: clamp(2.2rem, 6vw, 4.3rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-    }
-
-    .hero p {
-      max-width: 720px;
-      margin: 1.25rem 0 0;
-      color: rgba(255,255,255,0.88);
-      font-size: 1.1rem;
-    }
-
-    main { padding: 2rem 1.25rem 4rem; }
-
-    .quick-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-      margin: -3.1rem 0 2rem;
-      padding: 1rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+    main { margin-top: -2.4rem; padding: 0 1.25rem 4rem; }
+    .intro-card, .section-card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 20px;
       box-shadow: var(--shadow);
     }
-
-    .quick-links a {
-      padding: 0.55rem 0.85rem;
-      text-decoration: none;
-      font-weight: 700;
-      border-radius: 10px;
-    }
-
-    .quick-links a:hover { background: #eaf2ff; }
+    .intro-card { padding: clamp(1.4rem, 4vw, 2.4rem); }
+    .contributors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.3rem; }
+    .contributors div { background: var(--moon); border-radius: 14px; padding: 1rem 1.15rem; }
+    .contributors h2 { margin: 0 0 .35rem; font-size: 1rem; color: var(--ku-dark-blue); }
+    .contributors p { margin: .15rem 0; }
+    .notice { margin: 1.3rem 0 0; padding: 1rem 1.1rem; border-left: 5px solid var(--ku-red); background: #fff7f7; }
 
     section { scroll-margin-top: 1rem; }
-    .section-heading { margin: 2.5rem 0 1rem; }
-    .section-heading h2 {
-      margin: 0;
-      font-size: clamp(1.65rem, 3vw, 2.25rem);
-      color: var(--dark-blue);
-    }
-    .section-heading p { margin: 0.3rem 0 0; color: var(--muted); }
-
-    .setup-grid, .exercise-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: 0 5px 18px rgba(0, 52, 89, 0.06);
-    }
-
-    .card-content { padding: 1.4rem; }
-    .card h3 { margin: 0 0 0.5rem; color: var(--dark-blue); font-size: 1.25rem; }
-    .card p { margin: 0 0 1rem; color: var(--muted); }
-
-    .parts-list {
-      margin: 0;
-      padding-left: 1.25rem;
-    }
-    .parts-list li + li { margin-top: 0.55rem; }
-    .parts-list a { font-weight: 700; }
-
-    .exercise-number {
-      display: inline-grid;
-      place-items: center;
-      width: 2.2rem;
-      height: 2.2rem;
-      margin-bottom: 0.75rem;
-      background: var(--gold);
-      color: var(--dark-blue);
-      border-radius: 50%;
-      font-weight: 900;
-    }
-
-    .actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+    .section-heading { margin: 3.2rem 0 1.2rem; }
+    .section-heading h2 { margin: 0; color: var(--ku-dark-blue); font-size: clamp(1.65rem, 4vw, 2.3rem); }
+    .section-heading p { margin: .25rem 0 0; color: var(--muted); }
+    .resource-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .section-card { padding: 1.35rem; box-shadow: 0 6px 20px rgba(0,52,89,.07); }
+    .section-card h3 { margin: 0 0 .7rem; color: var(--ku-dark-blue); font-size: 1.12rem; }
+    .tag { display: inline-block; margin-bottom: .7rem; padding: .2rem .62rem; border-radius: 999px; background: #e6f0ff; color: var(--ku-blue); font-size: .78rem; font-weight: 800; }
+    .resource-links { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: .9rem; }
     .button {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.72rem 1rem;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 800;
-      border: 2px solid var(--blue);
+      display: inline-block; border-radius: 9px; padding: .58rem .82rem;
+      background: var(--ku-blue); color: white; text-decoration: none; font-weight: 750; font-size: .9rem;
     }
-    .button.primary { background: var(--blue); color: white; }
-    .button.secondary { background: white; color: var(--blue); }
-    .button:hover { transform: translateY(-1px); box-shadow: 0 5px 12px rgba(0,81,186,0.15); }
+    .button.secondary { color: var(--ku-blue); background: #e9f1fb; }
+    .button:hover { color: white; background: var(--ku-red); }
+    .button.secondary:hover { color: white; }
+    .parts-list { columns: 2; padding-left: 1.1rem; }
+    .parts-list li { margin-bottom: .55rem; break-inside: avoid; }
+    .exercise-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .exercise-list .section-card { position: relative; overflow: hidden; }
+    .exercise-list .section-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--ku-red); }
+    details { margin-top: 1rem; }
+    summary { cursor: pointer; font-weight: 800; color: var(--ku-dark-blue); }
+    footer { padding: 2rem 1.25rem 3rem; color: var(--muted); font-size: .9rem; }
 
-    .optional {
-      margin-top: 1rem;
-      border-left: 6px solid var(--gold);
+    @media (max-width: 850px) {
+      .resource-grid { grid-template-columns: 1fr; }
+      .exercise-list { grid-template-columns: 1fr; }
+      .moon-icon { width: 110px; }
     }
-    .optional-links {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.75rem;
+    @media (max-width: 620px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .hero { grid-template-columns: 1fr; padding-top: 3rem; }
+      .moon-icon { display: none; }
+      .contributors { grid-template-columns: 1fr; }
+      .parts-list { columns: 1; }
     }
-    .optional-links a {
-      padding: 0.85rem;
-      background: #f6f9fd;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 750;
-    }
-    .optional-links a:hover { background: #eaf2ff; }
-
-    footer {
-      color: rgba(255,255,255,0.85);
-      background: var(--dark-blue);
-      padding: 1.5rem 1.25rem;
-    }
-    footer p { margin: 0; }
-
-    @media (max-width: 760px) {
-      .hero { padding-top: 4rem; }
-      .setup-grid, .exercise-grid, .optional-links { grid-template-columns: 1fr; }
-      .quick-links { margin-top: -2.2rem; }
-      .button { width: 100%; justify-content: center; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .button:hover { transform: none; }
+    @media print {
+      .site-header { padding-bottom: 2rem; }
+      main { margin-top: 0; }
+      .intro-card, .section-card { box-shadow: none; }
+      .button { border: 1px solid #333; color: #000; background: transparent; }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <p class="eyebrow">Hands-on Arduino Learning</p>
-      <h1>Arduino Uno and Sensor Kit</h1>
-      <p>Set up the hardware, work through four guided sensor exercises, and extend the project with optional activities.</p>
+  <header class="site-header">
+    <div class="topbar">
+      <div class="brand">KU Biology + Engineering</div>
+      <nav aria-label="Main navigation">
+        <a href="#competitions">Competitions</a>
+        <a href="#videos">Workshop videos</a>
+        <a href="#setup">Arduino setup</a>
+        <a href="#exercises">Exercises</a>
+      </nav>
+    </div>
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Teacher and student resources</div>
+        <h1>Growing Plants on the Moon</h1>
+        <p>Engaging students in biology and engineering through lunar plant-growth experiments, sensor systems, and hands-on design.</p>
+      </div>
+      <div class="moon-icon" role="img" aria-label="Stylized moon"></div>
     </div>
   </header>
 
   <main>
-    <nav class="quick-links" aria-label="Page sections">
-      <a href="#setup">Setup &amp; Parts</a>
-      <a href="#exercise-1">OLED Screen</a>
-      <a href="#exercise-2">Pressure</a>
-      <a href="#exercise-3">Humidity</a>
-      <a href="#exercise-4">Soil Moisture</a>
-      <a href="#optional">Optional Exercises</a>
-    </nav>
+    <article class="intro-card">
+      <p>This site supports teachers interested in the Plant the Moon and Plant the Moon Jr. competitions, as well as teachers seeking new ways to bring engineering and biology together.</p>
+      <div class="contributors">
+        <div>
+          <h2>KU faculty contributors</h2>
+          <p><strong>Dr. Sara Wilson</strong>, Mechanical Engineering</p>
+          <p><strong>Dr. Jennifer Gleason</strong>, Ecology and Evolutionary Biology</p>
+        </div>
+        <div>
+          <h2>Student contributors</h2>
+          <p><strong>Clara Banks</strong>, Mechanical Engineering</p>
+          <p><strong>Mateo Nieto</strong>, West Middle School</p>
+        </div>
+      </div>
+      <p class="notice"><strong>Funding acknowledgment:</strong> This material is based upon work supported by the National Aeronautics and Space Administration under Cooperative Agreement No. 80NSSC20M0109. Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of NASA.</p>
+    </article>
+
+    <section id="competitions">
+      <div class="section-heading"><h2>Plant the Moon competitions</h2><p>Competition information and experimental guides for different grade levels.</p></div>
+      <div class="resource-grid">
+        <article class="section-card">
+          <span class="tag">High school, college, and beyond</span>
+          <h3>Plant the Moon Challenge</h3>
+          <p>Competition resources for high school students, undergraduates, and professionals.</p>
+          <div class="resource-links">
+            <a class="button" href="https://plantthemoon.com/">Challenge website</a>
+            <a class="button secondary" href="https://plantthemoon.com/wp-content/uploads/2024/04/Fundamental-Experiment-Guide.pdf">Experimental guide</a>
+          </div>
+        </article>
+        <article class="section-card">
+          <span class="tag">Elementary and middle school</span>
+          <h3>Plant the Moon Jr. Challenge</h3>
+          <p>Age-appropriate competition resources for elementary and middle school students.</p>
+          <div class="resource-links">
+            <a class="button" href="https://plantthemoon.com/jr/">Jr. Challenge website</a>
+            <a class="button secondary" href="https://plantthemoon.com/wp-content/uploads/2024/04/Fundamental-Experiment-Guide-Jr.pdf">Jr. experimental guide</a>
+          </div>
+        </article>
+        <article class="section-card">
+          <span class="tag">For teachers</span>
+          <h3>Educator guide</h3>
+          <p>A quick guide for educators implementing the competition with students.</p>
+          <div class="resource-links">
+            <a class="button" href="https://plantthemoon.com/wp-content/uploads/2025/10/PTMC-Educator-Quick-Guide-Spring-2026.pdf">Open educator guide</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="videos">
+      <div class="section-heading"><h2>Introduction and workshop videos</h2><p>Start with the biological context, then explore the engineering and sensor-kit activities.</p></div>
+      <div class="resource-grid">
+        <article class="section-card"><h3>Workshop introduction</h3><p>Dr. Sara Wilson</p><div class="resource-links"><a class="button" href="https://mediahub.ku.edu/media/t/1_k1o9z8s5" target="_blank" rel="noopener noreferrer" title="Growing Plants on the Moon workshop introduction video">View introduction</a></div></article>
+        <article class="section-card"><h3>Plant the Moon biology</h3><p>Dr. Jennifer Gleason</p><div class="resource-links"><a class="button" href="https://mediahub.ku.edu/media/t/1_36gi9bi8">Watch video</a></div></article>
+        <article class="section-card"><h3>Engineering in experiments</h3><p>Full sensor-kit workshop with Dr. Sara Wilson</p><div class="resource-links"><a class="button" href="https://mediahub.ku.edu/media/t/1_4rlmvybi">Watch video</a></div></article>
+      </div>
+    </section>
 
     <section id="setup">
-      <div class="section-heading">
-        <h2>Setting Up the Arduino Uno and Sensor Kit</h2>
-        <p>Start with the setup video, then gather the listed components.</p>
-      </div>
-      <div class="setup-grid">
-        <article class="card">
-          <div class="card-content">
-            <h3>Setup Video</h3>
-            <p>Follow the introductory walkthrough before beginning the exercises.</p>
-            <div class="actions">
-              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_8o6gl9po" target="_blank" rel="noopener noreferrer">Watch setup video ↗</a>
-            </div>
-          </div>
-        </article>
-        <article class="card">
-          <div class="card-content">
-            <h3>Parts</h3>
-            <p>These components are available from several vendors.</p>
-            <ul class="parts-list">
-              <li><a href="https://store-usa.arduino.cc/products/arduino-uno-rev3" target="_blank" rel="noopener noreferrer">Arduino Uno</a> <span>(other UNO-style boards may also be used)</span></li>
-              <li><a href="https://store-usa.arduino.cc/products/usb-2-0-cable-type-a-b" target="_blank" rel="noopener noreferrer">USB Cord Type A/B</a></li>
-              <li><a href="https://store-usa.arduino.cc/products/sensor-kit-base" target="_blank" rel="noopener noreferrer">Arduino Sensor Kit</a></li>
-              <li><a href="https://www.seeedstudio.com/Grove-Capacitive-Moisture-Sensor-Corrosion-Resistant-p-2580.html" target="_blank" rel="noopener noreferrer">Grove Capacitive Soil Moisture Sensor</a></li>
-            </ul>
-          </div>
-        </article>
-      </div>
+      <div class="section-heading"><h2>Set up the Arduino Uno and sensor kit</h2><p>Begin with the setup video, then gather the listed hardware.</p></div>
+      <article class="section-card">
+        <div class="resource-links"><a class="button" href="https://mediahub.ku.edu/media/t/1_8o6gl9po">Watch setup video</a></div>
+        <h3 style="margin-top:1.4rem">Parts</h3>
+        <ul class="parts-list">
+          <li><a href="https://store-usa.arduino.cc/products/arduino-uno-rev3">Arduino Uno</a> or another Uno-style board</li>
+          <li><a href="https://store-usa.arduino.cc/products/usb-2-0-cable-type-a-b">USB Type A/B cable</a></li>
+          <li><a href="https://store-usa.arduino.cc/products/sensor-kit-base">Arduino Sensor Kit</a></li>
+          <li><a href="https://www.seeedstudio.com/Grove-Capacitive-Moisture-Sensor-Corrosion-Resistant-p-2580.html">Grove capacitive soil-moisture sensor</a></li>
+        </ul>
+      </article>
     </section>
 
-    <section aria-labelledby="guided-exercises">
-      <div class="section-heading">
-        <h2 id="guided-exercises">Guided Exercises</h2>
-        <p>Each exercise includes a demonstration video and an Arduino code example.</p>
+    <section id="exercises">
+      <div class="section-heading"><h2>Sensor-kit exercises</h2><p>Use each video with its companion Arduino code.</p></div>
+      <div class="exercise-list">
+        <article class="section-card"><span class="tag">Exercise 1</span><h3>Write to the OLED screen</h3><div class="resource-links"><a class="button" href="https://mediahub.ku.edu/media/t/1_754qtpfv">Video</a><a class="button secondary" href="https://app.arduino.cc/sketches/b22dc400-028f-4caf-9e6a-1dc507a0e063?view-mode=preview">Code</a></div></article>
+        <article class="section-card"><span class="tag">Exercise 2</span><h3>Read the barometric pressure sensor</h3><div class="resource-links"><a class="button" href="https://mediahub.ku.edu/media/t/1_va7doj5f">Video</a><a class="button secondary" href="https://app.arduino.cc/sketches/4eb62a46-488c-4d87-a20f-ed4bd04d124d?view-mode=preview">Code</a></div></article>
+        <article class="section-card"><span class="tag">Exercise 3</span><h3>Read the humidity sensor</h3><div class="resource-links"><a class="button" href="https://mediahub.ku.edu/media/t/1_f60ahee9">Video</a><a class="button secondary" href="https://app.arduino.cc/sketches/c9a13b0b-5aa5-45ec-8cf8-0ce970398c42?view-mode=preview">Code</a></div></article>
+        <article class="section-card"><span class="tag">Exercise 4</span><h3>Read and calibrate the soil-moisture sensor</h3><div class="resource-links"><a class="button" href="https://mediahub.ku.edu/media/t/1_81arxq8j">Video</a><a class="button secondary" href="https://app.arduino.cc/sketches/10fa6937-dd75-4422-a21e-bdd9fcbefa9e?view-mode=preview">Read sensor code</a><a class="button secondary" href="https://app.arduino.cc/sketches/7a5293f7-a163-4039-85c8-77ed87276c5f?view-mode=preview">Calibration code</a></div></article>
       </div>
-      <div class="exercise-grid">
-        <article class="card" id="exercise-1">
-          <div class="card-content">
-            <span class="exercise-number" aria-hidden="true">1</span>
-            <h3>Writing to the OLED Screen</h3>
-            <p>Begin by displaying information on the Sensor Kit's OLED screen.</p>
-            <div class="actions">
-              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_754qtpfv" target="_blank" rel="noopener noreferrer">Watch video ↗</a>
-              <a class="button secondary" href="https://app.arduino.cc/sketches/b22dc400-028f-4caf-9e6a-1dc507a0e063?view-mode=preview" target="_blank" rel="noopener noreferrer">View code ↗</a>
-            </div>
-          </div>
-        </article>
 
-        <article class="card" id="exercise-2">
-          <div class="card-content">
-            <span class="exercise-number" aria-hidden="true">2</span>
-            <h3>Reading the Barometric Pressure Sensor</h3>
-            <p>Use the Sensor Kit to read barometric pressure.</p>
-            <div class="actions">
-              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_va7doj5f" target="_blank" rel="noopener noreferrer">Watch video ↗</a>
-              <a class="button secondary" href="https://app.arduino.cc/sketches/4eb62a46-488c-4d87-a20f-ed4bd04d124d?view-mode=preview" target="_blank" rel="noopener noreferrer">View code ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" id="exercise-3">
-          <div class="card-content">
-            <span class="exercise-number" aria-hidden="true">3</span>
-            <h3>Reading the Humidity Sensor</h3>
-            <p>Collect humidity measurements with the Sensor Kit.</p>
-            <div class="actions">
-              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_f60ahee9" target="_blank" rel="noopener noreferrer">Watch video ↗</a>
-              <a class="button secondary" href="https://app.arduino.cc/sketches/c9a13b0b-5aa5-45ec-8cf8-0ce970398c42?view-mode=preview" target="_blank" rel="noopener noreferrer">View code ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" id="exercise-4">
-          <div class="card-content">
-            <span class="exercise-number" aria-hidden="true">4</span>
-            <h3>Reading and Calibrating the Soil Moisture Sensor</h3>
-            <p>Read the sensor, then adjust its output using calibration values.</p>
-            <div class="actions">
-              <a class="button primary" href="https://mediahub.ku.edu/media/t/1_81arxq8j" target="_blank" rel="noopener noreferrer">Watch video ↗</a>
-              <a class="button secondary" href="https://app.arduino.cc/sketches/10fa6937-dd75-4422-a21e-bdd9fcbefa9e?view-mode=preview" target="_blank" rel="noopener noreferrer">Reading code ↗</a>
-              <a class="button secondary" href="https://app.arduino.cc/sketches/7a5293f7-a163-4039-85c8-77ed87276c5f?view-mode=preview" target="_blank" rel="noopener noreferrer">Calibration code ↗</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="optional">
-      <div class="section-heading">
-        <h2>Optional Exercises</h2>
-        <p>Continue exploring with light, motion, and water-pump activities.</p>
-      </div>
-      <article class="card optional">
-        <div class="card-content">
-          <div class="actions" style="margin-bottom: 1rem;">
-            <a class="button primary" href="https://mediahub.ku.edu/media/t/1_x2z7957x" target="_blank" rel="noopener noreferrer">Watch optional-exercises video ↗</a>
-          </div>
-          <div class="optional-links">
-            <a href="https://app.arduino.cc/sketches/7087df22-ae4c-4134-9cbb-9320348efe50?view-mode=preview" target="_blank" rel="noopener noreferrer">Light sensor code ↗</a>
-            <a href="https://app.arduino.cc/sketches/2e43ef13-4847-4481-a2ee-2bb6536f489d?view-mode=preview" target="_blank" rel="noopener noreferrer">Accelerometer code ↗</a>
-            <a href="https://app.arduino.cc/sketches/1099a21e-4796-4ce0-abe8-bf946ffaef13?view-mode=preview" target="_blank" rel="noopener noreferrer">Water pump code ↗</a>
-          </div>
+      <article class="section-card" style="margin-top:1rem">
+        <h3>Optional exercises</h3>
+        <div class="resource-links">
+          <a class="button" href="https://mediahub.ku.edu/media/t/1_x2z7957x">Watch video</a>
+          <a class="button secondary" href="https://app.arduino.cc/sketches/7087df22-ae4c-4134-9cbb-9320348efe50?view-mode=preview">Light sensor code</a>
+          <a class="button secondary" href="https://app.arduino.cc/sketches/2e43ef13-4847-4481-a2ee-2bb6536f489d?view-mode=preview">Accelerometer code</a>
+          <a class="button secondary" href="https://app.arduino.cc/sketches/1099a21e-4796-4ce0-abe8-bf946ffaef13?view-mode=preview">Water-pump code</a>
         </div>
       </article>
     </section>
   </main>
 
   <footer>
-    <div class="footer-inner">
-      <p>Arduino Uno and Sensor Kit learning resources</p>
-    </div>
+    <strong>Growing Plants on the Moon</strong><br>
+    Biology and engineering teaching resources developed by KU faculty and student contributors.
   </footer>
 </body>
 </html>
